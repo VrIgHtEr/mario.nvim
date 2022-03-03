@@ -1,5 +1,5 @@
 local M
-local image = require("pixel.image")
+local image = require("meow.image")
 local img
 
 M = {
