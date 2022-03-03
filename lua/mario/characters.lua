@@ -34,7 +34,7 @@ M = {
             local c = character
             c.placement = img.create_placement()
             c.state = 'halted'
-            c.anim = c.anim ~= nil and c.anim or { x = 0, y = 0, w = img.size.x, h = img.size.y, frames = 1, stride_x = 0, stride_y = 0 }
+            c.anim = c.anim ~= nil and c.anim or { x = 0, y = 0, w = img.size.x, h = img.size.y, frames = 1, stride_x = 0, stride_y = 0, z = nil }
             if not c.anim.z then
                 shuffle = true
             end
