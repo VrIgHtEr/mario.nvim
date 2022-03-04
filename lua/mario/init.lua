@@ -1,4 +1,4 @@
-local K, I, C = require 'meow', require 'meow.image', require 'mario.characters'
+local K, C = require 'meow', require 'mario.characters'
 
 local fps = 25
 local running, halting, active = false, false, 0
