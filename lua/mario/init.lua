@@ -1,4 +1,4 @@
-local I, T, C = require 'meow.image', require 'meow.terminal', require 'mario.characters'
+local K, I, C = require 'meow', require 'meow.image', require 'mario.characters'
 
 local fps = 25
 local running, halting, active = false, false, 0
@@ -63,7 +63,7 @@ end
 
 local function animation_loop()
     if running then
-        T.begin_transaction()
+        K.begin_transaction()
         C.exec 'update'
         if halting and active == 0 then
             running, halting = false, false
@@ -71,7 +71,7 @@ local function animation_loop()
         else
             vim.defer_fn(animation_loop, 1000 / fps)
         end
-        T.end_transaction()
+        K.end_transaction()
     end
 end
 
