@@ -61,15 +61,23 @@ local function init()
     end
 end
 
+local queued_func = nil
+
 local function animation_loop()
-    if running then
+    if running and queued_func == nil then
         K.begin_transaction()
         C.exec 'update'
         if halting and active == 0 then
             running, halting = false, false
             C.destroy()
-        else
+        elseif K.is_initialized() then
             vim.defer_fn(animation_loop, 1000 / fps)
+        elseif queued_func == nil then
+            queued_func = function()
+                queued_func = nil
+                animation_loop()
+            end
+            K.when_initialized(queued_func)
         end
         K.end_transaction()
     end
@@ -80,12 +88,19 @@ M = {
     lets_a_gooo = function()
         if halting then
             halting = false
-        elseif not running then
+        elseif not running and K.supported() then
             running = true
-            I.discover_win_size(vim.schedule_wrap(function()
+            local start = function()
                 init()
                 animation_loop()
-            end))
+            end
+            if not K.is_initialized() then
+                local st = start
+                start = function()
+                    K.when_initialized(st)
+                end
+            end
+            start()
         end
     end,
     oh_nooo = function()
