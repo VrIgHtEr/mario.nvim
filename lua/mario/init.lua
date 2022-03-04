@@ -15,7 +15,7 @@ local function init()
                 c.state = 'waiting'
                 c.counter = math.random(25, 25 * 11)
                 c.dir = not c.dir
-                c.xinc, c.xpos = c.dir and 1 or -1, c.dir and -c.anim.w or (I.win_w + c.anim.w)
+                c.xinc, c.xpos = c.dir and 1 or -1, c.dir and -c.anim.w or (K.win_w + c.anim.w)
                 local maxspeed, minspeed = c.anim.frames - 1 + c.anim.frames, 1
                 c.speed = math.max(minspeed, math.random() * (maxspeed - minspeed) + minspeed)
                 c.frame_counter = 0
@@ -37,7 +37,7 @@ local function init()
                 end
                 c.frame_counter = c.frame_counter + 1
                 c.display {
-                    pos = { x = math.floor(c.xpos), y = I.win_h - 1 },
+                    pos = { x = math.floor(c.xpos), y = K.win_h - 1 },
                     crop = {
                         x = c.anim.x + c.anim.cur_frame * c.anim.stride_x,
                         y = c.anim.y + (c.dir and 0 or c.anim.stride_y),
@@ -47,7 +47,7 @@ local function init()
                     z = c.anim.z,
                     anchor = c.dir and 3 or 2,
                 }
-                if (not c.dir or c.xpos >= I.win_w) and (c.dir or c.xpos < 0) then
+                if (not c.dir or c.xpos >= K.win_w) and (c.dir or c.xpos < 0) then
                     c.hide()
                     active = active - 1
                     return c.update 'idle'
